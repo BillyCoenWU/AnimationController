@@ -1,6 +1,7 @@
 ﻿#region Namespaces
 
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 using System;
@@ -38,20 +39,24 @@ public class AnimationController : MonoBehaviour
 		"Gesture"
 	};
 
+	#region Data
+
 	[Serializable]
 	public class Data
 	{
 		public string name = "";
 
-		[ContextMenuItem("Sort Sprites By Name", "DoSort")]
+		[ContextMenuItem("Sort Sprites By Name", "DoSort"), Tooltip("Use names like: Sprite_001 or Sprite_01")]
 		public Sprite[] frames = null;
 
 		public bool loop = false;
 
-		[Range(1, 60)]
+		[Range(10, 60)]
 		public int fps = 24;
 
 		public ANIMATION_TYPE type = ANIMATION_TYPE.EMPTY;
+
+		public Enum genericType;
 
 		public delegate void OnCompleteAnimation();
 		public delegate void OnChangeAnimation();
@@ -69,6 +74,8 @@ public class AnimationController : MonoBehaviour
 		public UnityEvent loopAnimationEvent = null;
 	}
 
+	#endregion
+
 	#region Variables & Properties
 
 	public List<Data> animations = new List<Data>();
@@ -84,6 +91,20 @@ public class AnimationController : MonoBehaviour
 		get
 		{
 			return m_currentAnimation;
+		}
+	}
+
+	private Image m_image = null;
+	public Image image
+	{
+		get
+		{
+			if(m_image == null)
+			{
+				m_image = GetComponent<Image>();
+			}
+
+			return m_image;
 		}
 	}
 
@@ -166,6 +187,11 @@ public class AnimationController : MonoBehaviour
 		{
 			m_spriteRenderer = GetComponent<SpriteRenderer>();
 		}
+
+		if(image == null)
+		{
+			m_image = GetComponent<Image>();
+		}
 	}
 
 	private void Update ()
@@ -177,35 +203,29 @@ public class AnimationController : MonoBehaviour
 
 	#region Gets Methods
 
+	public Data GetAnimationByGenericType (Enum genericType)
+	{
+		return animations.Find(a => a.genericType == genericType);
+	}
+
 	public Data GetAnimationByType (ANIMATION_TYPE type)
 	{
-		for(int i = 0; i < animations.Count; i++)
-		{
-			if(animations[i].type == type)
-			{
-				return animations[i];
-			}
-		}
-
-		return null;
+		return animations.Find(a => a.type == type);
 	}
 
 	public Data GetAnimationByName (string name)
 	{
-		for(int i = 0; i < animations.Count; i++)
-		{
-			if(animations[i].name == name)
-			{
-				return animations[i];
-			}
-		}
-
-		return null;
+		return animations.Find(a => a.name == name);
 	}
 
 	#endregion
 		
 	#region Play Methods
+
+	public void PlayByGenericType (Enum genericType)
+	{
+		PlayByIndex(animations.FindIndex(a => a.genericType == genericType));
+	}
 
 	public void PlayByType (ANIMATION_TYPE type)
 	{
@@ -264,6 +284,11 @@ public class AnimationController : MonoBehaviour
 		{
 			m_currentAnimation.startAnimationEvent.Invoke();
 		}
+	}
+
+	public void PlayByTypeWithDelay (Enum genericType, float delay)
+	{
+		InvokeDelay(PlayByGenericType, delay, genericType);
 	}
 
 	public void PlayByTypeWithDelay (ANIMATION_TYPE type, float delay)
@@ -327,7 +352,16 @@ public class AnimationController : MonoBehaviour
 			m_currentFrame = 0;
 		}
 
-		spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
+		if(spriteRenderer != null)
+		{		
+			m_spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
+		}
+
+		if(image != null)
+		{
+			m_image.sprite = m_currentAnimation.frames[m_currentFrame];
+		}
+
 		m_nextFrameTime += m_secondsPerFrame;
 	}
 
@@ -349,6 +383,11 @@ public class AnimationController : MonoBehaviour
 	private Coroutine InvokeDelay (Action<int> action, float time, int index)
 	{
 		return StartCoroutine(InvokeImpl(action, time, index));
+	}
+
+	private Coroutine InvokeDelay (Action<Enum> action, float time, Enum genericType)
+	{
+		return StartCoroutine(InvokeImpl(action, time, genericType));
 	}
 
 	private Coroutine InvokeDelay (Action<ANIMATION_TYPE> action, float time, ANIMATION_TYPE type)
@@ -373,6 +412,13 @@ public class AnimationController : MonoBehaviour
 		yield return new WaitForSeconds(time);
 
 		action(type);
+	}
+
+	private IEnumerator InvokeImpl (Action<Enum> action, float time, Enum genericType)
+	{
+		yield return new WaitForSeconds(time);
+
+		action(genericType);
 	}
 
 	private IEnumerator InvokeImpl (Action<string> action, float time, string name)

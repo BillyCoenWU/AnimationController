@@ -1,56 +1,56 @@
 fileFormatVersion: 2
 guid: 3cbf21ddd18a38b49bb48ffc88c41545
-timeCreated: 1479681286
+timeCreated: 1480302816
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Idle_1
-    21300002: Idle_2
-    21300004: Idle_3
-    21300006: Idle_4
-    21300008: Idle_5
-    21300010: Idle_6
-    21300012: Idle_7
-    21300014: Idle_8
-    21300016: Idle_9
+    21300000: Idle_01
+    21300002: Idle_02
+    21300004: Idle_03
+    21300006: Idle_04
+    21300008: Idle_05
+    21300010: Idle_06
+    21300012: Idle_07
+    21300014: Idle_08
+    21300016: Idle_09
     21300018: Idle_10
-    21300020: Gesture_1
-    21300022: Gesture_2
-    21300024: Gesture_3
-    21300026: Gesture_4
-    21300028: Gesture_5
-    21300030: Gesture_6
-    21300032: Gesture_7
-    21300034: Gesture_8
-    21300036: Gesture_9
+    21300020: Gesture_01
+    21300022: Gesture_02
+    21300024: Gesture_03
+    21300026: Gesture_04
+    21300028: Gesture_05
+    21300030: Gesture_06
+    21300032: Gesture_07
+    21300034: Gesture_08
+    21300036: Gesture_09
     21300038: Gesture_10
-    21300040: Walk_1
-    21300042: Walk_2
-    21300044: Walk_4
-    21300046: Walk_5
-    21300048: Walk_6
-    21300050: Walk_7
-    21300052: Walk_9
+    21300040: Walk_01
+    21300042: Walk_02
+    21300044: Walk_04
+    21300046: Walk_05
+    21300048: Walk_06
+    21300050: Walk_07
+    21300052: Walk_09
     21300054: Walk_10
-    21300056: Attack_1
-    21300058: Attack_2
-    21300060: Attack_3
-    21300062: Attack_4
-    21300064: Attack_5
-    21300066: Attack_6
-    21300068: Attack_7
-    21300070: Attack_8
-    21300072: Attack_9
+    21300056: Attack_01
+    21300058: Attack_02
+    21300060: Attack_03
+    21300062: Attack_04
+    21300064: Attack_05
+    21300066: Attack_06
+    21300068: Attack_07
+    21300070: Attack_08
+    21300072: Attack_09
     21300074: Attack_10
-    21300076: Death_1
-    21300078: Death_2
-    21300080: Death_3
-    21300082: Death_4
-    21300084: Death_5
-    21300086: Death_6
-    21300088: Death_7
-    21300090: Death_8
-    21300092: Death_9
+    21300076: Death_01
+    21300078: Death_02
+    21300080: Death_03
+    21300082: Death_04
+    21300084: Death_05
+    21300086: Death_06
+    21300088: Death_07
+    21300090: Death_08
+    21300092: Death_09
     21300094: Death_10
     21300096: rogue spritesheet calciumtrice_48
     21300098: rogue spritesheet calciumtrice_49
@@ -102,8 +102,8 @@ TextureImporter:
     21300190: rogue spritesheet calciumtrice_95
     21300192: rogue spritesheet calciumtrice_96
     21300194: rogue spritesheet calciumtrice_97
-    21300196: Walk_3
-    21300198: Walk_8
+    21300196: Walk_03
+    21300198: Walk_08
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -153,7 +153,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle_1
+      name: Idle_01
       rect:
         serializedVersion: 2
         x: 9
@@ -166,7 +166,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_2
+      name: Idle_02
       rect:
         serializedVersion: 2
         x: 41
@@ -179,7 +179,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_3
+      name: Idle_03
       rect:
         serializedVersion: 2
         x: 73
@@ -192,7 +192,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_4
+      name: Idle_04
       rect:
         serializedVersion: 2
         x: 105
@@ -205,7 +205,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_5
+      name: Idle_05
       rect:
         serializedVersion: 2
         x: 137
@@ -218,7 +218,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_6
+      name: Idle_06
       rect:
         serializedVersion: 2
         x: 169
@@ -231,7 +231,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_7
+      name: Idle_07
       rect:
         serializedVersion: 2
         x: 201
@@ -244,7 +244,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_8
+      name: Idle_08
       rect:
         serializedVersion: 2
         x: 233
@@ -257,7 +257,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle_9
+      name: Idle_09
       rect:
         serializedVersion: 2
         x: 265
@@ -283,7 +283,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_1
+      name: Gesture_01
       rect:
         serializedVersion: 2
         x: 9
@@ -296,7 +296,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_2
+      name: Gesture_02
       rect:
         serializedVersion: 2
         x: 41
@@ -309,7 +309,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_3
+      name: Gesture_03
       rect:
         serializedVersion: 2
         x: 73
@@ -322,7 +322,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_4
+      name: Gesture_04
       rect:
         serializedVersion: 2
         x: 105
@@ -335,7 +335,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_5
+      name: Gesture_05
       rect:
         serializedVersion: 2
         x: 137
@@ -348,7 +348,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_6
+      name: Gesture_06
       rect:
         serializedVersion: 2
         x: 169
@@ -361,7 +361,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_7
+      name: Gesture_07
       rect:
         serializedVersion: 2
         x: 201
@@ -374,7 +374,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_8
+      name: Gesture_08
       rect:
         serializedVersion: 2
         x: 232
@@ -387,7 +387,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gesture_9
+      name: Gesture_09
       rect:
         serializedVersion: 2
         x: 265
@@ -413,7 +413,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_1
+      name: Walk_01
       rect:
         serializedVersion: 2
         x: 7
@@ -426,7 +426,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_2
+      name: Walk_02
       rect:
         serializedVersion: 2
         x: 38
@@ -439,7 +439,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_4
+      name: Walk_04
       rect:
         serializedVersion: 2
         x: 102
@@ -452,7 +452,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_5
+      name: Walk_05
       rect:
         serializedVersion: 2
         x: 133
@@ -465,7 +465,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_6
+      name: Walk_06
       rect:
         serializedVersion: 2
         x: 165
@@ -478,7 +478,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_7
+      name: Walk_07
       rect:
         serializedVersion: 2
         x: 197
@@ -491,7 +491,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_9
+      name: Walk_09
       rect:
         serializedVersion: 2
         x: 264
@@ -517,7 +517,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_1
+      name: Attack_01
       rect:
         serializedVersion: 2
         x: 9
@@ -530,7 +530,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_2
+      name: Attack_02
       rect:
         serializedVersion: 2
         x: 41
@@ -543,7 +543,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_3
+      name: Attack_03
       rect:
         serializedVersion: 2
         x: 72
@@ -556,7 +556,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_4
+      name: Attack_04
       rect:
         serializedVersion: 2
         x: 106
@@ -569,7 +569,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_5
+      name: Attack_05
       rect:
         serializedVersion: 2
         x: 139
@@ -582,7 +582,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_6
+      name: Attack_06
       rect:
         serializedVersion: 2
         x: 171
@@ -595,7 +595,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_7
+      name: Attack_07
       rect:
         serializedVersion: 2
         x: 202
@@ -608,7 +608,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_8
+      name: Attack_08
       rect:
         serializedVersion: 2
         x: 234
@@ -621,7 +621,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Attack_9
+      name: Attack_09
       rect:
         serializedVersion: 2
         x: 265
@@ -647,7 +647,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_1
+      name: Death_01
       rect:
         serializedVersion: 2
         x: 9
@@ -660,7 +660,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_2
+      name: Death_02
       rect:
         serializedVersion: 2
         x: 41
@@ -673,7 +673,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_3
+      name: Death_03
       rect:
         serializedVersion: 2
         x: 74
@@ -686,7 +686,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_4
+      name: Death_04
       rect:
         serializedVersion: 2
         x: 106
@@ -699,7 +699,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_5
+      name: Death_05
       rect:
         serializedVersion: 2
         x: 138
@@ -712,7 +712,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_6
+      name: Death_06
       rect:
         serializedVersion: 2
         x: 172
@@ -725,7 +725,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_7
+      name: Death_07
       rect:
         serializedVersion: 2
         x: 204
@@ -738,7 +738,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_8
+      name: Death_08
       rect:
         serializedVersion: 2
         x: 234
@@ -751,7 +751,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Death_9
+      name: Death_09
       rect:
         serializedVersion: 2
         x: 263
@@ -777,7 +777,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_3
+      name: Walk_03
       rect:
         serializedVersion: 2
         x: 71
@@ -790,7 +790,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk_8
+      name: Walk_08
       rect:
         serializedVersion: 2
         x: 232

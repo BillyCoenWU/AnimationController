@@ -8,6 +8,8 @@ namespace CharacterState
 
 		private int m_currentTimes = 0;
 
+		private static string HORIZONTAL = "Horizontal";
+
 		public void EnterState (Character character)
 		{
 			m_character = character;
@@ -36,7 +38,7 @@ namespace CharacterState
 				return;
 			}
 
-			if(!Mathf.Approximately(0.0f, Input.GetAxis("Horizontal")))
+			if(!Mathf.Approximately(0.0f, Input.GetAxis(HORIZONTAL)))
 			{
 				m_character.SetState(new Move());
 				return;

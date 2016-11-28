@@ -8,24 +8,22 @@ namespace CharacterState
 
 		private Character m_character = null;
 
-		private bool m_lookingToRight = true;
-
 		private float speed = 2.0f;
 
 		private float LIMIT_X = 8.0f;
+
+		private static string HORIZONTAL = "Horizontal";
 
 		public void EnterState (Character character)
 		{
 			m_character = character;
 
 			m_character.animationController.PlayByType(ANIMATION_TYPE.WALK);
-
-			m_lookingToRight = (m_character.transform.localScale.x > 0.0f);
 		}
 
 		public void FixedUpdate ()
 		{
-			m_character.transform.position += m_character.transform.right * (m_lookingToRight ? speed : -speed) * Time.fixedDeltaTime;
+			m_character.transform.position += m_character.transform.right * (!m_character.animationController.spriteRenderer.flipX? speed : -speed) * Time.fixedDeltaTime;
 
 			m_latePosition = m_character.transform.position;
 			m_latePosition.x = Mathf.Clamp(m_latePosition.x, -LIMIT_X, LIMIT_X);
@@ -54,19 +52,16 @@ namespace CharacterState
 				return;
 			}
 
-			if(Mathf.Approximately(0.0f, Input.GetAxis("Horizontal")))
+			if(Mathf.Approximately(0.0f, Input.GetAxis(HORIZONTAL)))
 			{
 				m_character.SetState(new Idle());
 				return;
 			}
 
-			if((Input.GetAxis("Horizontal") > 0.0f && !m_lookingToRight) ||
-			   (Input.GetAxis("Horizontal") < 0.0f && m_lookingToRight))
+			if((Input.GetAxis(HORIZONTAL) > 0.0f && m_character.animationController.spriteRenderer.flipX) ||
+			   (Input.GetAxis(HORIZONTAL) < 0.0f && !m_character.animationController.spriteRenderer.flipX))
 			{
-				m_lookingToRight = !m_lookingToRight;
-				m_character.transform.localScale = new Vector3(m_character.transform.localScale.x * -1.0f,
-															   m_character.transform.localScale.y,
-															   m_character.transform.localScale.z);
+				m_character.animationController.spriteRenderer.flipX = !m_character.animationController.spriteRenderer.flipX;
 			}
 		}
 	}
