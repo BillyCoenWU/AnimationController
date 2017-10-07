@@ -15,12 +15,9 @@
 	{
 		public string name = "";
 
-		[ContextMenuItem("Sort Sprites By Name", "DoSort"), Tooltip("Use names like: Sprite_001 or Sprite_01")]
-		public Sprite[] frames = null;
+        public ANIMATION type = ANIMATION.NULL;
 
-		public bool loop = false;
-        
-		public int fps = 1;
+        public int fps = 1;
         public float duration
         {
             get
@@ -31,15 +28,18 @@
             set
             {
                 fps = Mathf.FloorToInt(value / frames.Length);
-                if(fps <= 0)
+                if (fps <= 0)
                 {
                     fps = 1;
                 }
             }
         }
+        
+        public bool loop = false;
 
-        public ANIMATION type = ANIMATION.NULL;
-
+        [Tooltip("Use names like: Sprite_001 or Sprite_01")]
+		public Sprite[] frames = null;
+        
 		/// <summary>
 		/// Set This Enum By Code According Your Necessity.
 		/// </summary>
@@ -68,6 +68,7 @@
 		public AnimationEvent OnCompleteAnimation = null;
 
         public void OnBeforeSerialize() {}
+
         public void OnAfterDeserialize()
         {
             if(fps <= 0)

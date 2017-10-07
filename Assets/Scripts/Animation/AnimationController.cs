@@ -3,7 +3,9 @@
     namespace Animation
     {
         #region Namespaces
+        #if UNITY_EDITOR
         using UnityEditor;
+        #endif
         using UnityEngine;
         using UnityEngine.UI;
 
@@ -11,14 +13,8 @@
         using System.Collections;
         #endregion
 
-        #region enums
-
-        public enum COMPONENT
-        {
-            SPRITE_RENDERER = 0,
-            IMAGE
-        }
-
+        #region Enums
+        
         /// <summary>
         /// Set This Enumeration According To Your Necessity
         /// </summary>
@@ -28,10 +24,7 @@
 
             IDLE,
             MOVE,
-            JUMP,
-
-            // MUST BE THE FINAL VALUE
-            TOTAL
+            JUMP
         }
 
         #endregion
@@ -50,52 +43,27 @@
             };
 
             #region Variables & Properties
-
-            [HideInInspector]
-            public Image image = null;
-
-            [HideInInspector]
-            public SpriteRenderer spriteRenderer = null;
-
+            
             [SerializeField]
             private AnimationData m_animationData = null;
-            public AnimationData animationData
-            {
-                get { return m_animationData; }
-                set { m_animationData = value; }
-            }
 
-            [SerializeField]
-            private COMPONENT m_componentType = COMPONENT.SPRITE_RENDERER;
-            public COMPONENT componentType
-            {
-                get
-                {
-                    return m_componentType;
-                }
-            }
+            [SerializeField, HideInInspector]
+            private SpriteRenderer m_spriteRenderer = null;
 
-            private WaitForSeconds m_waitForSeconds;
-            private WaitForSecondsRealtime m_waitForUnscaledSecond;
-            
+            [SerializeField, HideInInspector]
+            private Image m_image = null;
+
+            private WaitForSeconds m_waitForSeconds = null;
+
             public delegate void OnChangeAnimation();
             public OnChangeAnimation onChangeAnimation = null;
-
+            
             private Data m_currentAnimation = null;
             public Data currentAnimation
             {
                 get
                 {
                     return m_currentAnimation;
-                }
-            }
-
-            private float m_secondsPerFrame = 0.0f;
-            private float m_time
-            {
-                get
-                {
-                    return m_unscaledAnimation ? Time.unscaledTime : Time.time;
                 }
             }
             
@@ -108,35 +76,27 @@
                 }
             }
 
-            private bool m_unscaledAnimation = false;
-            public bool unscaledAnimation
-            {
-                get { return m_unscaledAnimation; }
-                set { m_unscaledAnimation = value; }
-            }
-
+            [SerializeField]
             private bool m_playOnStart = false;
-            public bool playOnStart
-            {
-                get { return m_playOnStart; }
-                set { m_playOnStart = value; }
-            }
 
-            private bool m_playing = false;
+            [SerializeField, HideInInspector]
+            private bool m_isUIObject = false;
+
+            private bool m_isPlaying = false;
             public bool isPlaying
             {
                 get
                 {
-                    return m_playing;
+                    return m_isPlaying;
                 }
             }
 
-            private bool m_done = false;
+            private bool m_isDone = false;
             public bool isDone
             {
                 get
                 {
-                    return m_done;
+                    return m_isDone;
                 }
             }
 
@@ -144,6 +104,8 @@
 
             #region Editor Method
 
+            #if UNITY_EDITOR
+            [ContextMenu("Sort Sprites By Name")]
             private void DoSort()
             {
                 foreach (Data anim in m_animationData.animations)
@@ -152,31 +114,38 @@
                 }
             }
 
-            public void GetSpriteRenderer()
+            [ContextMenu("Set Sprite Renderer")]
+            private void SetSpriteRenderer()
             {
-                spriteRenderer = GetComponent<SpriteRenderer>();
+                m_spriteRenderer = GetComponent<SpriteRenderer>();
 
-                if (spriteRenderer == null)
+                if (m_spriteRenderer == null)
                 {
                     if (EditorUtility.DisplayDialog("Component Missing!", "The GameObject do not have the component \"SpriteRenderer\". Do you want to add it?", "Yes", "No"))
                     {
-                        spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+                        m_spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
                     }
                 }
+
+                m_isUIObject = false;
             }
 
-            public void GetImage()
+            [ContextMenu("Set Image")]
+            private void SetImage()
             {
-                image = GetComponent<Image>();
+                m_image = GetComponent<Image>();
 
-                if (image == null)
+                if (m_image == null)
                 {
-                    if (EditorUtility.DisplayDialog("Component Missing!", "The GameObject do not have the component \"Image\". Do you want to add it?", "Yes", "No"))
+                    if (EditorUtility.DisplayDialog("Component Missing!", "The GameObject do not have the component \"SpriteRenderer\". Do you want to add it?", "Yes", "No"))
                     {
-                        image = gameObject.AddComponent<Image>();
+                        m_image = gameObject.AddComponent<Image>();
                     }
                 }
+
+                m_isUIObject = true;
             }
+            #endif
 
             #endregion
 
@@ -186,51 +155,91 @@
             {
                 if (m_playOnStart)
                 {
-                    PlayByIndex(0);
+                    Play(0);
                 }
             }
             
             #endregion
 
-            #region Gets Methods
+            #region Get Methods
 
-            public Data GetAnimationByGenericType(Enum genericType)
+            public Data GetAnimation(Enum genericType)
             {
                 return m_animationData.animationsList.Find(a => a.genericType.Equals(genericType));
             }
 
-            public Data GetAnimationByType(ANIMATION type)
+            public Data GetAnimation(ANIMATION type)
             {
                 return m_animationData.animationsList.Find(a => a.type == type);
             }
 
-            public Data GetAnimationByName(string name)
+            public Data GetAnimation(string name)
             {
                 return m_animationData.animationsList.Find(a => (String.Compare(a.name, name, false) == 1));
+            }
+
+            public Data GetAnimation(int index)
+            {
+                return m_animationData.animations[index];
             }
 
             #endregion
 
             #region Play Methods
 
-            public void PlayByGenericType(Enum genericType)
+            public void PlayDelayed(Enum genericType, float delay)
             {
-                PlayByIndex(m_animationData.animationsList.FindIndex(a => a.genericType.Equals(genericType)));
+                StartCoroutine(PlayDelayed(Play, delay, genericType));
             }
 
-            public void PlayByType(ANIMATION type)
+            public void PlayDelayed(ANIMATION type, float delay)
             {
-                PlayByIndex(m_animationData.animationsList.FindIndex(a => a.type == type));
+                StartCoroutine(PlayDelayed(Play, delay, type));
             }
 
-            public void PlayByName(string name)
+            public void PlayDelayed(string name, float delay)
             {
-                PlayByIndex(m_animationData.animationsList.FindIndex(a => (String.Compare(a.name, name, false) == 1)));
+                StartCoroutine(PlayDelayed(Play, delay, name));
             }
 
-            public void PlayByIndex(int index)
+            public void PlayDelayed(int index, float delay)
+            {
+                if(index < 0)
+                {
+                    return;
+                }
+
+                StartCoroutine(PlayDelayed(Play, delay, index));
+            }
+
+            public void Play(Enum genericType)
+            {
+                Play(GetAnimation(genericType));
+            }
+
+            public void Play(ANIMATION type)
+            {
+                Play(GetAnimation(type));
+            }
+
+            public void Play(string name)
+            {
+                Play(GetAnimation(name));
+            }
+
+            public void Play(int index)
             {
                 if (index < 0)
+                {
+                    return;
+                }
+
+                Play(m_animationData.animations[index]);
+            }
+
+            private void Play(Data newAnimation)
+            {
+                if(newAnimation == null)
                 {
                     return;
                 }
@@ -251,12 +260,11 @@
                     }
                 }
 
-                m_currentAnimation = m_animationData.animations[index];
-
-                m_secondsPerFrame = 1.0f / m_currentAnimation.fps;
+                m_currentAnimation = newAnimation;
+                
                 m_currentFrame = -1;
-                m_playing = true;
-                m_done = false;
+                m_isPlaying = true;
+                m_isDone = false;
 
                 if (m_currentAnimation.OnStartAnimation != null)
                 {
@@ -265,36 +273,9 @@
 
                 StopCoroutine(Animation());
 
-                if(m_unscaledAnimation)
-                {
-                    m_waitForUnscaledSecond = new WaitForSecondsRealtime(m_secondsPerFrame);
-                }
-                else
-                {
-                    m_waitForSeconds = new WaitForSeconds(m_secondsPerFrame);
-                }
+                m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
 
                 StartCoroutine(Animation());
-            }
-
-            public void PlayDelayedByType(Enum genericType, float delay)
-            {
-                StartCoroutine(PlayDelayed(PlayByGenericType, delay, genericType));
-            }
-
-            public void PlayDelayedByType(ANIMATION type, float delay)
-            {
-                StartCoroutine(PlayDelayed(PlayByType, delay, type));
-            }
-
-            public void PlayDelayedByName(string name, float delay)
-            {
-                StartCoroutine(PlayDelayed(PlayByName, delay, name));
-            }
-
-            public void PlayDelayedByIndex(int index, float delay)
-            {
-                StartCoroutine(PlayDelayed(PlayByIndex, delay, index));
             }
 
             #endregion
@@ -303,39 +284,85 @@
 
             public void Stop()
             {
-                m_done = true;
+                m_isDone = true;
                 StopCoroutine(Animation());
             }
 
             public void Pause()
             {
-                m_playing = false;
+                m_isPlaying = false;
             }
 
             public void Resume()
             {
-                m_playing = true;
+                m_isPlaying = true;
+            }
+
+            public void ChangeAnimationDuration(Enum genericType, float duration)
+            {
+                Data d = GetAnimation(genericType);
+
+                d.duration = duration;
+
+                if (d == m_currentAnimation)
+                {
+                    m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
+                }
+            }
+            
+            public void ChangeAnimationDuration(ANIMATION type, float duration)
+            {
+                Data d = GetAnimation(type);
+
+                d.duration = duration;
+
+                if (d == m_currentAnimation)
+                {
+                    m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
+                }
+            }
+
+            public void ChangeAnimationDuration(string name, float duration)
+            {
+                Data d = GetAnimation(name);
+
+                d.duration = duration;
+
+                if (d == m_currentAnimation)
+                {
+                    m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
+                }
+            }
+
+            public void ChangeAnimationDuration(int index, float duration)
+            {
+                if(index < 0)
+                {
+                    return;
+                }
+
+                Data d = m_animationData.animations[index];
+
+                d.duration = duration;
+
+                if (d == m_currentAnimation)
+                {
+                    m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
+                }
             }
 
             #endregion
 
             #region Coroutines
-            
+
             private IEnumerator Animation()
             {
-                while (!m_playing)
+                while (!m_isPlaying)
                 {
                     yield return null;
                 }
 
-                if (m_unscaledAnimation)
-                {
-                    yield return m_waitForUnscaledSecond;
-                }
-                else
-                {
-                    yield return m_waitForSeconds;
-                }
+                yield return m_waitForSeconds;
 
                 m_currentFrame++;
 
@@ -350,21 +377,21 @@
 
                         m_currentFrame = 0;
 
-                        if (m_componentType == COMPONENT.SPRITE_RENDERER)
+                        if(m_isUIObject)
                         {
-                            spriteRenderer.sprite = currentAnimation.frames[m_currentFrame];
+                            m_image.sprite = m_currentAnimation.frames[m_currentFrame];
                         }
                         else
                         {
-                            image.sprite = currentAnimation.frames[m_currentFrame];
+                            m_spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
                         }
 
                         StartCoroutine(Animation());
                     }
                     else
                     {
-                        m_done = true;
-                        m_playing = false;
+                        m_isDone = true;
+                        m_isPlaying = false;
 
                         if (m_currentAnimation.OnCompleteAnimation != null)
                         {
@@ -374,13 +401,13 @@
                 }
                 else
                 {
-                    if (m_componentType == COMPONENT.SPRITE_RENDERER)
+                    if (m_isUIObject)
                     {
-                        spriteRenderer.sprite = currentAnimation.frames[m_currentFrame];
+                        m_image.sprite = m_currentAnimation.frames[m_currentFrame];
                     }
                     else
                     {
-                        image.sprite = currentAnimation.frames[m_currentFrame];
+                        m_spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
                     }
 
                     StartCoroutine(Animation());
