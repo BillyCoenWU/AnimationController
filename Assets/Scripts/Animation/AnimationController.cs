@@ -53,6 +53,7 @@
             [SerializeField, HideInInspector]
             private Image m_image = null;
 
+            private IEnumerator m_coroutine = null;
             private WaitForSeconds m_waitForSeconds = null;
 
             public delegate void OnChangeAnimation();
@@ -271,11 +272,15 @@
                     m_currentAnimation.OnStartAnimation();
                 }
 
-                StopCoroutine(Animation());
+                if(m_coroutine != null)
+                {
+                    StopCoroutine(m_coroutine);
+                }
 
                 m_waitForSeconds = new WaitForSeconds(1.0f / m_currentAnimation.fps);
+                m_coroutine = Animation();
 
-                StartCoroutine(Animation());
+                StartCoroutine(m_coroutine);
             }
 
             #endregion
@@ -386,7 +391,9 @@
                             m_spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
                         }
 
-                        StartCoroutine(Animation());
+                        m_coroutine = Animation();
+
+                        StartCoroutine(m_coroutine);
                     }
                     else
                     {
@@ -409,8 +416,10 @@
                     {
                         m_spriteRenderer.sprite = m_currentAnimation.frames[m_currentFrame];
                     }
+                    
+                    m_coroutine = Animation();
 
-                    StartCoroutine(Animation());
+                    StartCoroutine(m_coroutine);
                 }
             }
 
